@@ -28,7 +28,7 @@ async function connectDb() {
 }
 
 app.listen(app, () => {
-	connectDb().catch(console.dir);
+	connectDb().catch((err) => console.log(err));
 
 	console.log(`DB and server connected on port:${port}`);
 });
