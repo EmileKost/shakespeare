@@ -1,5 +1,6 @@
 // - Get, set, update, delete
 // - Future logic can be handled here
+// - Can use req.params.id or something else later
 
 export const getSentences = (req, res) => {
 	res.status(200).json({ message: "Get sentences for user" });
@@ -16,3 +17,4 @@ export const updateSentence = (req, res) => {
 export const deleteSentence = (req, res) => {
 	res.status(200).json({ message: "Delete sentence" });
 };
+v;
