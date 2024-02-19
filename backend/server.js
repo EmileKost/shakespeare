@@ -22,14 +22,13 @@ async function connectDb() {
 	try {
 		await client.connect();
 		await client.db("admin").command({ ping: 1 });
-		console.log("The Database is connected");
 	} finally {
 		await client.close();
 	}
 }
 
 app.listen(app, () => {
-	console.log(`Server is running on port: ${port}`);
-});
+	connectDb().catch(console.dir);
 
-connectDb().catch(console.dir);
+	console.log(`DB and server connected on port:${port}`);
+});
