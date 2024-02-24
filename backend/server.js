@@ -1,34 +1,47 @@
-const express = require("express");
+import express from "express";
+import { mongoose, Schema } from "mongoose";
+import bcrypt from "bcrypt";
 
-const { MongoClient, ServerApiVersion } = require("mongodb");
+import User from "./model/User.js";
+
 // Fix that URL is encoded so that DB can connect
 const uri = `mongodb+srv://EmileKost:test@cluster0.xat7joi.mongodb.net/?retryWrites=true&w=majority`;
-const port = 5000;
+const port = 5200;
 const app = express();
 
 app.get("/", (req, res) => {
 	res.send("I am a test server");
-});
 
-const client = new MongoClient(uri, {
-	serverApi: {
-		version: ServerApiVersion.v1,
-		strict: true,
-		deprecationErrors: true,
-	},
-});
+	const saltRounds = 10;
+	const testPassword = "ilajflksdn";
 
-async function connectDb() {
-	try {
-		await client.connect();
-		await client.db("admin").command({ ping: 1 });
-	} finally {
-		await client.close();
+	const salt = bcrypt.genSaltSync(saltRounds);
+	const hash = bcrypt.hashSync(testPassword, salt);
+
+	async function saveUser() {
+		const user = new User({
+			firstName: "Emilo",
+			lastName: "Tranquilo",
+			email: "emilekost00@gmail.com",
+			password: hash,
+		});
+
+		console.log(`A new user has been added: ${user}`);
+		await user.save();
 	}
-}
 
-app.listen(app, () => {
-	connectDb().catch((err) => console.log(err));
+	saveUser();
+});
 
-	console.log(`DB and server connected on port:${port}`);
+// Connection to server
+app.listen(port, () => {
+	// Connecting to DB is Async so promise
+	mongoose
+		.connect(uri)
+		.then(() => {
+			console.log("DB is succesfully connected");
+		})
+		.catch((err) => console.log(err));
+
+	console.log(`Server connected on port:${port}`);
 });
