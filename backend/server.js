@@ -4,49 +4,49 @@ import bcrypt from "bcrypt";
 
 import User from "./model/User.js";
 
+import { FRONTEND_ENDPOINTS } from "./constants/frontendEndpoints.js";
+
 // Fix that URL is encoded so that DB can connect
 const uri = `mongodb+srv://EmileKost:test@cluster0.xat7joi.mongodb.net/?retryWrites=true&w=majority`;
 const port = 5200;
 const server = express();
 
-const testObject = {
-	name: "Emile",
-	lastName: "Tranquilli",
-};
+server.use(express.urlencoded({ extended: true }));
 
-// Home
+// Server TEST
 server.get("/", (req, res) => {
 	res.send("I am a test server");
 });
 
 // Get user
 server.get("/getUser", (req, res) => {
-	res.status(200).send(testObject);
+	res.status(200).send("USER BABBYYYY");
 });
 
 // Create user
-server.post("/create-user", (req, res) => {
-	const saltRounds = 10;
-	const testPassword = "ilajflksdn";
+server.get("/createUser", (req, res) => {
+	// const { firstName, lastName, email, password } = req.query;
 
-	const salt = bcrypt.genSaltSync(saltRounds);
-	const hash = bcrypt.hashSync(testPassword, salt);
+	// const saltRounds = 10;
+	// const salt = bcrypt.genSaltSync(saltRounds);
+	// const hash = bcrypt.hashSync(password, salt);
 
-	// ** Handle check if existing email or user ** //
+	// // ** Handle check if existing email or user ** //
+	// async function saveUser() {
+	// 	const user = new User({
+	// 		firstName,
+	// 		lastName,
+	// 		email,
+	// 		password: hash,
+	// 	});
 
-	async function saveUser() {
-		const user = new User({
-			firstName: "Emilo",
-			lastName: "Tranquilo",
-			email: "emilekost00@gmail.com",
-			password: hash,
-		});
-
-		console.log(`A new user has been added: ${user}`);
-		await user.save();
-	}
+	// 	console.log(`A new user has been added: ${user}`);
+	// 	await user.save();
+	// }
 
 	// saveUser();
+
+	res.status(200).sendStatus(200);
 });
 
 // Connection to server

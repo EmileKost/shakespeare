@@ -1,8 +1,41 @@
+"use client";
+
+import { redirect } from "next/navigation";
+
+import { API_ENDPOINTS } from "@/constants/apiEndpoints";
+
 export const Register = () => {
+	// TODO: Handle correct From submit to server and redirect to /login
+	//       - What is going wrong is that just using action lets the user also
+	//         get redirected. We need to update this with this function -->
+
+	// async function handleSignUp(event: any) {
+	// 	event.preventDefault();
+
+	// 	console.log({ event });
+
+	// 	const data = new FormData();
+
+	// 	console.log({ data });
+
+	// 	try {
+	// 		const response = await fetch(API_ENDPOINTS.CREATE_USER, {
+	// 			method: "POST",
+	// 			body: data,
+	// 		});
+
+	// 		if (response.ok) redirect("/login");
+	// 	} catch (error) {
+	// 		console.log(`An error occurred: ${error}`);
+	// 	}
+	// }
+
 	return (
 		<div className="mx-4 md:mx-2 w-full px-4 py-10 bg-black-default rounded-lg">
 			<form
-				action="POST"
+				// onSubmit={(event) => handleSignUp(event)}
+				method="get"
+				action={API_ENDPOINTS.CREATE_USER}
 				className="flex flex-col gap-4">
 				<div>
 					<label
@@ -12,7 +45,7 @@ export const Register = () => {
 					</label>
 					<input
 						placeholder="@"
-						className="w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2"
+						className="text-white-default w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2 "
 						type="email"
 						name="email"
 					/>
@@ -27,7 +60,7 @@ export const Register = () => {
 						placeholder="John"
 						type="text"
 						name="firstName"
-						className="w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2"
+						className="text-white-default w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2"
 					/>
 				</div>
 				<div>
@@ -40,7 +73,7 @@ export const Register = () => {
 						placeholder="Johnson"
 						type="text"
 						name="lastName"
-						className="w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2"
+						className="text-white-default w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2"
 					/>
 				</div>
 				<div>
@@ -52,7 +85,7 @@ export const Register = () => {
 					<input
 						type="password"
 						name="password"
-						className="w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2"
+						className="text-white-default w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2"
 					/>
 				</div>
 				<button
