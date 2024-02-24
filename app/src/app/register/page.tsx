@@ -1,4 +1,4 @@
-import { AuthorizationTemplate } from "@/templates/AuthorizationTemplate";
+import { AuthorizationTemplate } from "@/app/templates/AuthorizationTemplate";
 import { Register } from "@/components/Register";
 
 export default function page() {

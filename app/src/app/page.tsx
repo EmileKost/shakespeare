@@ -1,6 +1,4 @@
-import { HomeTemplate } from "@/templates/HomeTemplate";
-
-import Image from "next/image";
+import { HomeTemplate } from "@/app/templates/HomeTemplate";
 
 export default function Home() {
 	return <HomeTemplate />;
