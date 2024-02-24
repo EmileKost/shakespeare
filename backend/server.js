@@ -25,26 +25,27 @@ server.get("/getUser", (req, res) => {
 
 // Create user
 server.get("/createUser", (req, res) => {
-	// const { firstName, lastName, email, password } = req.query;
+	// TODO: Probably going to need to change this to req.body because of FE form handling
+	const { firstName, lastName, email, password } = req.query;
 
-	// const saltRounds = 10;
-	// const salt = bcrypt.genSaltSync(saltRounds);
-	// const hash = bcrypt.hashSync(password, salt);
+	const saltRounds = 10;
+	const salt = bcrypt.genSaltSync(saltRounds);
+	const hash = bcrypt.hashSync(password, salt);
 
-	// // ** Handle check if existing email or user ** //
-	// async function saveUser() {
-	// 	const user = new User({
-	// 		firstName,
-	// 		lastName,
-	// 		email,
-	// 		password: hash,
-	// 	});
+	// ** Handle check if existing email or user ** //
+	async function saveUser() {
+		const user = new User({
+			firstName,
+			lastName,
+			email,
+			password: hash,
+		});
 
-	// 	console.log(`A new user has been added: ${user}`);
-	// 	await user.save();
-	// }
+		console.log(`A new user has been added: ${user}`);
+		await user.save();
+	}
 
-	// saveUser();
+	saveUser();
 
 	res.status(200).sendStatus(200);
 });
