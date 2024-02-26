@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { redirect } from "next/navigation";
 
 import { API_ENDPOINTS } from "@/constants/apiEndpoints";
@@ -30,12 +31,47 @@ export const Register = () => {
 	// 	}
 	// }
 
+	const [userData, setUserData] = useState({
+		firstName: "",
+		lastName: "",
+		email: "",
+		password: "",
+	});
+
+	const handleFormChange = (e: any) => {
+		const { name, value } = e.target;
+
+		setUserData({
+			...userData,
+			[name]: value,
+		});
+	};
+
+	const handleSubmit = async () => {
+		try {
+			const res = await fetch(API_ENDPOINTS.CREATE_USER, {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(userData),
+			});
+
+			if (res.status === 200) {
+				console.log("SUCCES");
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	useEffect(() => {
+		console.log(userData);
+	}, [userData]);
+
 	return (
 		<div className="mx-4 md:mx-2 w-full px-4 py-10 bg-black-default rounded-lg">
 			<form
-				// onSubmit={(event) => handleSignUp(event)}
-				method="get"
-				action={API_ENDPOINTS.CREATE_USER}
+				onSubmit={handleSubmit}
+				method="post"
 				className="flex flex-col gap-4">
 				<div>
 					<label
@@ -48,6 +84,7 @@ export const Register = () => {
 						className="text-white-default w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2 "
 						type="email"
 						name="email"
+						onChange={handleFormChange}
 					/>
 				</div>
 				<div>
@@ -61,6 +98,7 @@ export const Register = () => {
 						type="text"
 						name="firstName"
 						className="text-white-default w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2"
+						onChange={handleFormChange}
 					/>
 				</div>
 				<div>
@@ -74,6 +112,7 @@ export const Register = () => {
 						type="text"
 						name="lastName"
 						className="text-white-default w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2"
+						onChange={handleFormChange}
 					/>
 				</div>
 				<div>
@@ -86,6 +125,7 @@ export const Register = () => {
 						type="password"
 						name="password"
 						className="text-white-default w-full bg-transparent border border-white-default rounded-sm h-10 mt-1.5 placeholder:text-white-default placeholder:opacity-50 placeholder:translate-x-2"
+						onChange={handleFormChange}
 					/>
 				</div>
 				<button
