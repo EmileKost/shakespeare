@@ -1,6 +1,8 @@
 import express from "express";
 import { mongoose, Schema } from "mongoose";
 import bcrypt from "bcrypt";
+import cors from "cors";
+import bodyParser from "body-parser";
 
 import User from "./model/User.js";
 
@@ -11,7 +13,11 @@ const uri = `mongodb+srv://EmileKost:test@cluster0.xat7joi.mongodb.net/?retryWri
 const port = 5200;
 const server = express();
 
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json());
+
 server.use(express.urlencoded({ extended: true }));
+server.use(cors());
 
 // Server TEST
 server.get("/", (req, res) => {
@@ -24,9 +30,8 @@ server.get("/getUser", (req, res) => {
 });
 
 // Create user
-server.get("/createUser", (req, res) => {
-	// TODO: Probably going to need to change this to req.body because of FE form handling
-	const { firstName, lastName, email, password } = req.query;
+server.post("/createUser", (req, res) => {
+	const { firstName, lastName, email, password } = req.body;
 
 	const saltRounds = 10;
 	const salt = bcrypt.genSaltSync(saltRounds);
